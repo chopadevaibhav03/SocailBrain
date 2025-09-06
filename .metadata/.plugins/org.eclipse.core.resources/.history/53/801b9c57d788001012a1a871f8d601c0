@@ -1,0 +1,37 @@
+package com.social.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.annotations.ValueGenerationType;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "share_links")
+public class ShareLink {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+	
+	// unique random string for sharing
+	@Column(unique = true, nullable = false)
+	private String hash;
+	
+	 // Who created the share link
+	@ManyToOne
+	@JoinColumn(name = "user_id" , nullable = false)
+	private User user;
+	
+	// Contents associated with this share link
+	
+	private List<Content> contents = new ArrayList<>();
+}

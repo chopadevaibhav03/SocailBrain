@@ -1,0 +1,38 @@
+package com.social.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.social.model.Content;
+import com.social.model.ShareLink;
+import com.social.model.User;
+import com.social.repo.ShareLinkRepository;
+
+@Service
+public class ShareLinkImpl implements ShareLinkService{
+
+	@Autowired
+	private ShareLinkRepository shareLinkRepository;
+	
+	@Override
+	public ShareLink createShareLink(User user, List<Content> contents) {
+		 ShareLink shareLink = new ShareLink();
+		 shareLink.setUser(user);
+		 shareLink.setContents(contents);
+		// Generate random unique hash (like your random function in Node)
+	        shareLink.setHash(UUID.randomUUID().toString().substring(0, 10));
+		 return null;
+	}
+
+	@Override
+	public Optional<ShareLink> getByHash(String hash) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	
+
+}

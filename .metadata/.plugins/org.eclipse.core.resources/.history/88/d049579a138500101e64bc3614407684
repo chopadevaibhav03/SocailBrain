@@ -1,0 +1,5 @@
+package com.social.repo;
+
+public interface UserRepository {
+
+}

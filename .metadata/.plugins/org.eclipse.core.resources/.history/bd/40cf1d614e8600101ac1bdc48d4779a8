@@ -1,0 +1,71 @@
+package com.social.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.social.model.Content;
+import com.social.model.User;
+import com.social.repo.UserRepository;
+import com.social.service.ContentService;
+
+@RestController
+@RequestMapping("/api/content")
+public class ContentController {
+
+	@Autowired
+	private ContentService contentService;
+	@Autowired
+	private UserRepository userRepository;
+
+	// Add new content
+	@PostMapping("/add/{userId}")
+	public ResponseEntity<?> addContent(@PathVariable Integer userId, @RequestBody Content content) {
+
+		System.out.println(
+				"Incoming Content: " + content.getTitle() + " | " + content.getLink() + " | " + content.getType());
+
+		Optional<User> userOpt = userRepository.findById(userId);
+		if (userOpt.isEmpty()) {
+			return ResponseEntity.badRequest().body("User not found with id " + userId);
+		}
+
+		content.setUser(userOpt.get()); // <-- important
+		Content saved = contentService.saveContent(content);
+		return ResponseEntity.ok(saved);
+
+	}
+
+	@GetMapping("/all")
+	public List<Content> getAllContents() {
+		return contentService.findAll();
+
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getContentById(@PathVariable int id){
+		Optional<Content> content = contentService.findById(id);
+		return content.isPresent() ? ResponseEntity.ok(content.get())
+				: ResponseEntity.badRequest().body("content not found");
+	}
+	
+	// get content by it's type...
+	@GetMapping("/type/{type}")
+	public List<Content> getContentByType(@PathVariable String type){
+		return contentService.getConteByType(type);
+	}
+	
+	// get content by it's title
+	@GetMapping("/title/{title}")
+	public List<Content> getContentByTitle(@PathVariable String title){
+		return contentService.getContentByTitle(title);
+	}
+}

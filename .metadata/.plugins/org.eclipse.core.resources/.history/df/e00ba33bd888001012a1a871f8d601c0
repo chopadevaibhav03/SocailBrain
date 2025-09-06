@@ -1,0 +1,11 @@
+package com.social.service;
+
+import java.util.Optional;
+
+import com.social.model.ShareLink;
+
+public interface ShareLinkService {
+
+	ShareLink createShareLink(User user, List<Content> contents);
+    Optional<ShareLink> getByHash(String hash);
+}

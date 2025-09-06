@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+.masonry-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    /* Ensures spacing between items */
+}

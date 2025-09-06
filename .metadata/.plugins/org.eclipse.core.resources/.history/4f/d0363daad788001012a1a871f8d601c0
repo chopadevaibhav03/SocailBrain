@@ -1,0 +1,9 @@
+package com.social.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.social.model.ShareLink;
+
+public interface ShareLinkRepository extends JpaRepository<ShareLink, Integer> {
+
+}

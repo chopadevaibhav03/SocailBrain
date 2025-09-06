@@ -1,0 +1,24 @@
+package com.social.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.social.model.Content;
+import com.social.model.User;
+
+public interface ContentService {
+
+//	 Content save(Content content);
+
+	 Content saveContent(Content content);
+	 
+	 List<Content> findAll();
+	 
+	 Optional<Content> findById(int id);
+	 
+	 List<Content> getConteByType(String type);
+	 
+	 List<Content> findByUser(User user);
+	 
+	 List<Content> getContentByTitle(String title);
+}

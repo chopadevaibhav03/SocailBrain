@@ -1,0 +1,10 @@
+package com.social.service;
+
+import com.social.model.Content;
+
+public interface ContentService {
+
+	 Content save(Content content);
+
+	 Content saveContent(Content content);
+}

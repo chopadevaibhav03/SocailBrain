@@ -1,0 +1,9 @@
+package com.social.repo;
+
+import com.social.model.User;
+
+public interface UserRepository {
+
+	User save(User user);
+
+}

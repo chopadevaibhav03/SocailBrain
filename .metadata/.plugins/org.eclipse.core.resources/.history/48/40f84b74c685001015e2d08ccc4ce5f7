@@ -1,0 +1,13 @@
+package com.social.repo;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.social.model.Content;
+import com.social.model.User;
+
+public interface ContentRepository extends JpaRepository<Content, Integer>{
+
+	List<Content> findByUser(User user);
+}
