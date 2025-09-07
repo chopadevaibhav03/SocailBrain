@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=E\:\\Social Brain\\socialbrain\\.git;
-GitRepositoriesView.GitDirectories.relative=socialbrain\\.git;
+GitRepositoriesView.GitDirectories=E\:\\Social Brain\\socialbrain\\.git;E\:\\Social Brain\\.git;
+GitRepositoriesView.GitDirectories.relative=socialbrain\\.git;.git;
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1
