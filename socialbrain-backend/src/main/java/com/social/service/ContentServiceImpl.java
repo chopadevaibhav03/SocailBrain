@@ -13,15 +13,18 @@ import com.social.repo.ContentRepository;
 @Service
 public class ContentServiceImpl implements ContentService {
 
-	private final UserController userController;
+//	private final UserController userController;
 
 	@Autowired
 	private ContentRepository contentRepo;
 
-	ContentServiceImpl(UserController userController) {
-		this.userController = userController;
-	}
+//	ContentServiceImpl(UserController userController) {
+//		this.userController = userController;
+//	}
 
+    @Autowired
+    private UserService userService; // ✅ if you need user info
+	
 	@Override
 	public Content saveContent(Content content) {
 

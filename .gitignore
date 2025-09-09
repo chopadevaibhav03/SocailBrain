@@ -1,1 +1,16 @@
-/.metadata/
+# Eclipse / IntelliJ / IDE stuff
+.metadata/
+*.iml
+.idea/
+.classpath
+.project
+.settings/
+
+# Build outputs
+target/
+bin/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db

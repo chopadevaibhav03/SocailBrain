@@ -2,7 +2,7 @@ package com.social.controller;
 
 import java.util.List;
 import java.util.Optional;
-import com.social.service.ContentServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +18,9 @@ import com.social.model.Content;
 import com.social.model.User;
 import com.social.repo.UserRepository;
 import com.social.service.ContentService;
+import com.social.service.ContentServiceImpl;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/content")
@@ -34,22 +37,24 @@ public class ContentController {
 		this.contentServiceImpl = contentServiceImpl;
 	}
 
-	// Add new content
-	@PostMapping("/add/{userId}")
-	public ResponseEntity<?> addContent(@PathVariable Integer userId, @RequestBody Content content) {
+	// Add new content (User is taken from JWT)
+	@PostMapping("/add")
+	public ResponseEntity<?> addContent(HttpServletRequest request, @RequestBody Content content) {
 
-		System.out.println(
-				"Incoming Content: " + content.getTitle() + " | " + content.getLink() + " | " + content.getType());
-
-		Optional<User> userOpt = userRepository.findById(userId);
-		if (userOpt.isEmpty()) {
-			return ResponseEntity.badRequest().body("User not found with id " + userId);
+		String username = (String) request.getAttribute("username"); // ✅ from JwtFilter
+		if (username == null) {
+			return ResponseEntity.status(401).body("Unauthorized: No username in token");
 		}
 
-		content.setUser(userOpt.get()); // <-- important
-		Content saved = contentService.saveContent(content);
-		return ResponseEntity.ok(saved);
+		Optional<User> userOpt = userRepository.findByUsername(username);
+		if (userOpt.isEmpty()) {
+			return ResponseEntity.badRequest().body("User not found with username: " + username);
+		}
 
+		content.setUser(userOpt.get());
+		Content saved = contentService.saveContent(content);
+
+		return ResponseEntity.ok(saved);
 	}
 
 	@GetMapping("/all")

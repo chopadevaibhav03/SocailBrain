@@ -22,17 +22,22 @@ import com.social.service.UserService;
 @RequestMapping("/api/users")
 public class UserController {
 
-	private final UserRepository userRepository;
+//	private final UserRepository userRepository;
 
-	private final SecurityConfig securityConfig;
+//	private final SecurityConfig securityConfig;
 
 	@Autowired
 	private UserService userService;
 
-	UserController(SecurityConfig securityConfig, UserRepository userRepository) {
-		this.securityConfig = securityConfig;
-		this.userRepository = userRepository;
-	}
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+	
+//	UserController(SecurityConfig securityConfig, UserRepository userRepository) {
+//		this.securityConfig = securityConfig;
+//		this.userRepository = userRepository;
+//	}
 
 	// create user
 

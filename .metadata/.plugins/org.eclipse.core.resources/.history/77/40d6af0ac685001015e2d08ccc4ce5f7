@@ -1,5 +1,0 @@
-package com.social.repo;
-
-public interface ContentRepository {
-
-}
