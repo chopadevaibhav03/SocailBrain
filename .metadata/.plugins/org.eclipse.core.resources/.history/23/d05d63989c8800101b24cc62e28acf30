@@ -1,5 +1,0 @@
-package com.social.service;
-
-public class TagServiceImpl implements TagService {
-
-}

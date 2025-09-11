@@ -1,5 +1,6 @@
 package com.social.controller;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,36 +26,35 @@ public class AuthController {
 	// SignUp
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> signup(@RequestBody User user) {
+	 public ResponseEntity<?> signup(@RequestBody User user) {
 
-		if (userRepository.existsByUsername(user.getUsername())) {
-			return ResponseEntity.badRequest().body("Username already exists");
-		}
-		if (userRepository.existsByEmail(user.getEmail())) {
-			return ResponseEntity.badRequest().body("Email already exists");
-		}
+        if (userRepository.existsByUsername(user.getUsername())) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Username already exists"));
+        }
+        if (userRepository.existsByEmail(user.getEmail())) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Email already exists"));
+        }
 
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		User saved = userRepository.save(user);
-		return ResponseEntity.ok(saved);
-	}
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User saved = userRepository.save(user);
+        return ResponseEntity.ok(Map.of("message", "User registered successfully", "userId", saved.getId()));
+    }
 	
 	// SignIn
 	
 	@PostMapping("/signin")
-	public ResponseEntity<?> singin(@RequestBody User loginRequest){
-		
-		Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
-		if(userOpt.isEmpty()) {
-			return ResponseEntity.badRequest().body("User not found!");
-		}
-		
-		User user = userOpt.get();
-		if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-			return ResponseEntity.badRequest().body("Invalid credentials");
-		}
-		
-        return ResponseEntity.ok("Login successful (JWT will be here in future)");
-		
-	}
+	public ResponseEntity<?> signin(@RequestBody User loginRequest) {
+
+        Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "User not found"));
+        }
+
+        User user = userOpt.get();
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid credentials"));
+        }
+
+        return ResponseEntity.ok(Map.of("message", "Login successful"));
+    }
 }

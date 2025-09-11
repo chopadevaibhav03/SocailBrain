@@ -1,8 +1,0 @@
-package com.social.service;
-
-import com.social.model.Tag;
-
-public interface TagService {
-
-	Tag saveTag(Tag tag);
-}
